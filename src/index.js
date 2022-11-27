@@ -1,13 +1,16 @@
-const express = require('express');
-const React = require('react');
-const renderToString = require('react-dom//server').renderToString;
-const Home = require('./client/components/Home').default;
+// Since we are using webpack on both the client and server code, this 
+// allows us to write the server code in the ES2015 style.
+
+import express from 'express';
+import renderer from './helpers/renderer';
+
 const app = express();
 
-app.get('/', (req, res) => {
-  const content = renderToString(<Home />);
+app.use(express.static('public'));
 
-  res.send(content);
+app.get('/', (req, res) => {
+  const html = renderer();
+  res.send(html);
 });
 
 app.listen(3000, () => {
