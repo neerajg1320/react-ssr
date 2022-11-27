@@ -9,8 +9,7 @@ const app = express();
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-  const html = renderer();
-  res.send(html);
+  res.send(renderer(req));
 });
 
 app.listen(3000, () => {
