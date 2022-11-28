@@ -8721,7 +8721,7 @@ var _reducers2 = _interopRequireDefault(_reducers);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Startup point for the client side application
-var store = (0, _redux.createStore)(_reducers2.default, {}, (0, _redux.applyMiddleware)(_reduxThunk2.default));
+var store = (0, _redux.createStore)(_reducers2.default, window.INITIAL_STATE, (0, _redux.applyMiddleware)(_reduxThunk2.default));
 
 _reactDom2.default.hydrate(_react2.default.createElement(
   _reactRedux.Provider,
@@ -37599,6 +37599,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _react = __webpack_require__(9);
 
 var _react2 = _interopRequireDefault(_react);
@@ -37622,15 +37624,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //   );
 // }
 
-exports.default = [{
+exports.default = [_extends({}, _HomePage2.default, {
   path: '/',
-  component: _HomePage2.default,
   exact: true
-}, {
-  loadData: _UsersListPage.loadData,
-  path: '/users',
-  component: _UsersListPage2.default
-}];
+}), _extends({}, _UsersListPage2.default, {
+  path: '/users'
+})];
 
 /***/ }),
 /* 455 */
@@ -38649,7 +38648,9 @@ var HomePage = function HomePage() {
   );
 };
 
-exports.default = HomePage;
+exports.default = {
+  component: HomePage
+};
 
 /***/ }),
 /* 480 */
@@ -38737,7 +38738,10 @@ function loadData(store) {
   return store.dispatch((0, _actions.fetchUsers)());
 }
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, { fetchUsers: _actions.fetchUsers })(UsersListPage);
+exports.default = {
+  component: (0, _reactRedux.connect)(mapStateToProps, { fetchUsers: _actions.fetchUsers })(UsersListPage),
+  loadData: loadData
+};
 
 /***/ })
 /******/ ]);
