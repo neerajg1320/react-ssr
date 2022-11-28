@@ -42,6 +42,12 @@ app.get('*', (req, res) => {
     .then(() => {
       const context = {};
       const content = renderer(req, store, context);
+
+      if (context.url) {
+        console.log('Redirect to:', context.url)
+        return res.redirect(context.url)
+      }
+
       if (context.notFound) {
         res.status(404);
       }
